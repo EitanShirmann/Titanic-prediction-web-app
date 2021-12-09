@@ -1,6 +1,7 @@
 from django.http.response import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render 
 
+from . import predictions
 # Create your views here.
 
 def index(request):
@@ -9,12 +10,19 @@ def index(request):
 
 def predict(request):
     if request.method == "POST":
-        age = request.json["age"]
-        sex = request.POST.get("sex")
-        clas = request.json["clas"]
-        x = age+clas
+        
+        Age = float(request.POST.get("age"))
+        Fare = float(request.POST.get("fare"))
+        Pclass = float(request.POST.get("class"))
+        Sex = str(request.POST.get("sex"))
+        SibSp = float(request.POST.get("sibsp"))
+        Parch = float(request.POST.get("parch"))
+        Embarked = str(request.POST.get("embarked"))
 
-    return JsonResponse(x)
+        y_pred = predictions.predict([[Age, Fare, Pclass, Sex, SibSp, Parch, Embarked]])
+
+    return HttpResponse(y_pred)
+
 
 
 

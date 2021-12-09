@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+
+        #main{
+            text-align: center;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +14,51 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-<h1 id="gh">this is something</h1>
+<div id="main">
+    <h1>Would you survive the Titanic?</h1>
     <form  action="" id="post-form", method="POST">
 
         {% csrf_token%}
-        <input type="text" id="Age" >
-        <input type="text" id="Sex">
-        <input type="text" id="Clas">
-        <button type="submit" value="Submit">submit</button>
+
+        <div>
+            <label for="age">Age: </label>
+            <input type="text" id="age" >
+        </div>
+        <div>
+            <label for="age">Fare: </label>
+            <input type="text" id="fare">
+        </div>
+        <div>
+            <label for="class">Class: </label>
+        <input type="text" id="class">
+        </div>
+        <div>
+           <label for="sex">Sex: </label>
+        <input type="text" id="sex">
+        </div>
+        <div>
+            <label   for="sibsp">Sibsp: </label>
+        <input type="text" id="sibsp">
+        </div>
+       <div>
+        <label for="parch">Parch: </label>
+        <input type="text" id="parch">
+       </div>
+        <div>
+            <label for="embarked">Embarked form: </label>
+            <input type="text" id="embarked">
+        </div>
+
+        <button type="submit" value="Submit">Submit</button>
 
 
     </form>
+    <h4>Submit to find out...</h4>
+</div>
     
 
 
-    <h2></h2>
+    
 </body>
 
 
@@ -34,17 +70,24 @@
         $.ajax({
             type:"POST",
             url: 'predict/',
-            data:JSON.stringify({
-                age:$("#Age").val(),
-                sex:$("#Sex").val(),
-                clas:$("#Clas").val(),
+            data:{
+
+                age:$("#age").val(),
+                fare:$("#fare").val(),
+                class:$("#class").val(),
+                sex:$("#sex").val(),
+                sibsp:$("#sibsp").val(),
+                parch:$("#parch").val(),
+                embarked:$("#embarked").val(),
+                
                 action:"post",
+                csrfmiddlewaretoken: '{{ csrf_token }}'
                 
 
-            }),
+            },
             success:
                 function(data){
-                $("h2").html("this is it")
+                $("h4").html(data)
             }
                 
 
