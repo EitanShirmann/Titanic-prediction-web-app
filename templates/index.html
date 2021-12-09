@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanic prediction</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<h1 id="gh">this is something</h1>
+    <form  action="" id="post-form", method="POST">
+
+        {% csrf_token%}
+        <input type="text" id="Age" >
+        <input type="text" id="Sex">
+        <input type="text" id="Clas">
+        <button type="submit" value="Submit">submit</button>
+
+
+    </form>
+    
+
+
+    <h2></h2>
+</body>
+
+
+
+<script>
+    $(document).on("submit","#post-form", function(e){
+        e.preventDefault();
+        
+        $.ajax({
+            type:"POST",
+            url: 'predict/',
+            data:JSON.stringify({
+                age:$("#Age").val(),
+                sex:$("#Sex").val(),
+                clas:$("#Clas").val(),
+                action:"post",
+                
+
+            }),
+            success:
+                function(data){
+                $("h2").html("this is it")
+            }
+                
+
+
+        });
+    });
+
+
+
+
+
+
+
+</script>
+</html>
